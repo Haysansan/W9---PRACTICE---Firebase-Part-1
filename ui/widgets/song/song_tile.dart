@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/songs/song.dart';
+import '../../../model/songs/song_with_artist.dart';
 
 class SongTile extends StatelessWidget {
   const SongTile({
     super.key,
-    required this.song,
+    required this.songWithArtist,
     required this.isPlaying,
     required this.onTap,
   });
 
-  final Song song;
+  final SongWithArtist songWithArtist;
   final bool isPlaying;
   final VoidCallback onTap;
 
@@ -27,14 +27,19 @@ class SongTile extends StatelessWidget {
           onTap: onTap,
           leading: ClipOval(
             child: Image.network(
-              '${song.imageUrl}',
+              '${songWithArtist.artist.imageUrl}',
               width: 45,
               height: 45,
               fit: BoxFit.cover,
             ),
           ),
-          title: Text(song.title),
-          subtitle: Text('${song.duration.inMinutes} mins'),
+          title: Text(songWithArtist.song.title),
+          subtitle: Text(
+            '${songWithArtist.song.duration.inMinutes} mins ${songWithArtist.artist.name} - ${songWithArtist.artist.genre}',
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
           trailing: Text(
             isPlaying ? "Playing" : "",
             style: TextStyle(color: Colors.amber),
